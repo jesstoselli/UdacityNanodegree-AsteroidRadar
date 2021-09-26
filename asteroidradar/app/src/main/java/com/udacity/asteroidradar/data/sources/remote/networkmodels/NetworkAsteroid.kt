@@ -1,10 +1,10 @@
-package com.udacity.asteroidradar
+package com.udacity.asteroidradar.data.sources.remote.networkmodels
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Asteroid(
+data class NetworkAsteroid(
     val id: Long,
     val codename: String,
     val closeApproachDate: String,

@@ -69,6 +69,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
+    // OK HTTP
+    implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
+
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
