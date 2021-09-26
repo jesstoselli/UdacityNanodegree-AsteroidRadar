@@ -82,6 +82,9 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
 
+    // Logging
+    implementation "com.jakewharton.timber:timber:$version_timber"
+
     // Work
     implementation "android.arch.work:work-runtime-ktx:$version_work"
 

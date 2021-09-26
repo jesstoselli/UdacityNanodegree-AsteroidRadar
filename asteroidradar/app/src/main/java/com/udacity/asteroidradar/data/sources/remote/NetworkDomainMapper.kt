@@ -1,7 +1,7 @@
 package com.udacity.asteroidradar.data.sources.remote
 
-import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.PictureOfDay
+import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.data.sources.remote.networkmodels.NetworkAsteroid
 import com.udacity.asteroidradar.data.sources.remote.networkmodels.NetworkPictureOfTheDay
 

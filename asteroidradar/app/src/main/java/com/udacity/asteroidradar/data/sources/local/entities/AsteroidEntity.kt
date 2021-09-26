@@ -3,12 +3,14 @@ package com.udacity.asteroidradar.data.sources.local.entities
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "asteroids")
 @Parcelize
 data class AsteroidEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey
+    val id: Long,
     val codename: String,
     val closeApproachDate: String,
     val absoluteMagnitude: Double,

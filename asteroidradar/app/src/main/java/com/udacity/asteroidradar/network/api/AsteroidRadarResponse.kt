@@ -62,9 +62,3 @@ data class NetworkRelativeVelocity(
 data class NetworkMissDistance(
     val astronomical: String
 )
-//
-//fun AsteroidRadarResponse.asDomainModel(): List<NetworkNearEarthObjectsDate> {
-//    return eventDate.map {
-//
-//    }
-//}

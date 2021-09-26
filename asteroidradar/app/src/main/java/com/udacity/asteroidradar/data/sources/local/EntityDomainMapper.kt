@@ -1,9 +1,9 @@
 package com.udacity.asteroidradar.data.sources.local
 
-import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.data.sources.local.entities.AsteroidEntity
 import com.udacity.asteroidradar.data.sources.local.entities.PictureEntity
+import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.domain.PictureOfDay
 
 fun ArrayList<Asteroid>.toDatabaseModel(): Array<AsteroidEntity> {
 

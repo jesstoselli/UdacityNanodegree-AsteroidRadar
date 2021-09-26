@@ -6,6 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.udacity.asteroidradar.data.sources.local.entities.AsteroidEntity
+import com.udacity.asteroidradar.domain.Asteroid
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AsteroidDao {
@@ -16,12 +18,15 @@ interface AsteroidDao {
     @Query("select * from asteroids where closeApproachDate = :date")
     fun getTodaysAsteroids(date: String): LiveData<List<AsteroidEntity>>
 
+    @Query("SELECT * FROM asteroids ORDER BY closeApproachDate ASC")
+    fun getAllAsteroids(): Flow<List<Asteroid>>
+
     @Query("select * from asteroids where closeApproachDate between :startDate and :endDate order by date(closeApproachDate) asc")
-    fun getWeeksAsteroids(startDate: String, endDate: String): LiveData<List<AsteroidEntity>>
+    fun getAsteroidsByCloseApproachDate(startDate: String, endDate: String): LiveData<List<AsteroidEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg asteroids: AsteroidEntity)
 
-    @Query("delete from asteroids where closeApproachDate < :date")
-    suspend fun removeOldAsteroidsData(date: String)
+    @Query("delete from asteroids where closeApproachDate < :today")
+    suspend fun removeOldAsteroidsData(today: String)
 }
