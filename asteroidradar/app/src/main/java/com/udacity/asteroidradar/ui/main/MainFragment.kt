@@ -1,4 +1,4 @@
-package com.udacity.asteroidradar.main
+package com.udacity.asteroidradar.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +15,13 @@ import com.udacity.asteroidradar.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onViewCreated()"
+        }
+        ViewModelProvider(this, MainViewModel.Factory(activity.application)).get(MainViewModel::class.java)
     }
+
+//    private var viewModelAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

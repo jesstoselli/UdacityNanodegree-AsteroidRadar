@@ -22,13 +22,11 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters) :
 
         return try {
             pictureRepository.refreshPictureOfTheDay()
-            asteroidRepository.refreshAsteroidsList()
             asteroidRepository.removeOldAsteroids()
+            asteroidRepository.refreshAsteroidsList()
             Result.success()
         } catch (exception: HttpException) {
             Result.retry()
         }
     }
-
-
 }
