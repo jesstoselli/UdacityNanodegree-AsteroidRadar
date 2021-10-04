@@ -21,30 +21,33 @@ private val moshi = Moshi.Builder()
     .build()
 
 
-private val httpClient = OkHttpClient.Builder()
-    .addInterceptor(MyInterceptor())
-    .build()
-
-class MyInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        var original = chain.request()
-        val url = original.url.newBuilder().addQueryParameter("api_key", Constants.API_KEY).build()
-        original = original.newBuilder().url(url).build()
-        return chain.proceed(original)
-    }
-}
+//private val httpClient = OkHttpClient.Builder()
+//    .addInterceptor(MyInterceptor())
+//    .build()
+//
+//class MyInterceptor : Interceptor {
+//    override fun intercept(chain: Interceptor.Chain): Response {
+//        var original = chain.request()
+//        val url = original.url.newBuilder().addQueryParameter("api_key", Constants.API_KEY).build()
+//        original = original.newBuilder().url(url).build()
+//        return chain.proceed(original)
+//    }
+//}
 
 interface AsteroidRadarApiService {
     @GET("neo/rest/v1/feed")
     fun getAsteroidsAsync(
         @Query("start_date") start: String,
-        @Query("end_date") end: String
+        @Query("end_date") end: String,
+        @Query("api_key") apiKey: String = Constants.API_KEY
     ): Deferred<List<NetworkAsteroid>>
 }
 
 interface PictureOfTheDayService {
     @GET("planetary/apod")
-    fun getPictureOfDayAsync(): Deferred<NetworkPictureOfTheDay>
+    fun getPictureOfDayAsync(
+        @Query("api_key") apiKey: String = Constants.API_KEY
+    ): Deferred<NetworkPictureOfTheDay>
 }
 
 object NetworkApi {
@@ -53,7 +56,7 @@ object NetworkApi {
         .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .client(httpClient)
+//        .client(httpClient)
         .build()
 
     val asteroidService: AsteroidRadarApiService by lazy {

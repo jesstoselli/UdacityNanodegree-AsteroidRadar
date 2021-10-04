@@ -2,12 +2,14 @@ package com.udacity.asteroidradar.ui.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.data.repository.AsteroidRepository
 import com.udacity.asteroidradar.data.repository.PictureRepository
 import com.udacity.asteroidradar.data.sources.local.getDatabase
+import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.utils.Event
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -16,25 +18,39 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val asteroidsRepository = AsteroidRepository(database)
     private val pictureOfTheDayRepository = PictureRepository(database)
 
+    val pictureOfTheDay = pictureOfTheDayRepository.pictureOfTheDay
+
+    lateinit var asteroidsList: LiveData<List<Asteroid>>
+
+    private val _navigateToDetails = MutableLiveData<Event<Asteroid>>()
+    val navigateToDetails: LiveData<Event<Asteroid>>
+        get() = _navigateToDetails
+
     init {
         viewModelScope.launch {
-            asteroidsRepository.refreshAsteroidsList()
+            updatePictureOfTheDay()
+            updateAsteroidsList()
+            populateAsteroidsList()
+        }
+    }
+
+    private fun updatePictureOfTheDay() {
+        viewModelScope.launch {
             pictureOfTheDayRepository.refreshPictureOfTheDay()
         }
     }
 
-    val asteroids = asteroidsRepository.asteroids
-
-    /**
-     * Factory for constructing MainViewModel with parameter
-     */
-    class Factory(private val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return MainViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
+    private fun updateAsteroidsList() {
+        viewModelScope.launch {
+            asteroidsRepository.refreshAsteroidsList()
         }
+    }
+
+    private fun populateAsteroidsList() {
+        asteroidsList = asteroidsRepository.asteroids
+    }
+
+    fun asteroidClicked(asteroid: Asteroid) {
+        _navigateToDetails.value = Event(asteroid)
     }
 }

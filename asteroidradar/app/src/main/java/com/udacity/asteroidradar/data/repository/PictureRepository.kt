@@ -16,7 +16,7 @@ class PictureRepository(private val database: AsteroidDatabase) {
 
     val pictureOfTheDay: LiveData<PictureOfDay> =
         Transformations.map(database.pictureDao.getPictureOfTheDay()) {
-            it.toDomainModel()
+            it?.toDomainModel()
         }
 
     // Refresh the picture stored in offline cache

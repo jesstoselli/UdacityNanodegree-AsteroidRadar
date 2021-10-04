@@ -11,7 +11,7 @@
 
         <variable
             name="asteroidCallback"
-            type="com.udacity.asteroidradar.ui.main.AsteroidClick" />
+            type="com.udacity.asteroidradar.ui.main.AsteroidsAdapter.AsteroidClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/tv_asteroidName"
-            style="@style/PrimaryText"
+            style="@style/TextLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{asteroid.codename}"
@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/tv_asteroidDate"
-            style="@style/SecondaryText"
+            style="@style/TextMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{asteroid.closeApproachDate}"

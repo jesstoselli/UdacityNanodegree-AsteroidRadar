@@ -10,7 +10,6 @@ import com.udacity.asteroidradar.domain.Asteroid
 
 class AsteroidsAdapter(val callback: AsteroidClick) :
     ListAdapter<Asteroid, AsteroidsAdapter.AsteroidViewHolder>(DiffCallback) {
-//    RecyclerView.Adapter<AsteroidsAdapter.AsteroidViewHolder>() {
 
     var asteroids: List<Asteroid> = emptyList()
         set(value) {
@@ -28,6 +27,10 @@ class AsteroidsAdapter(val callback: AsteroidClick) :
         // holder.itemView.setOnClickListener {
         //      callback.onClick(asteroid)
         // }
+        val contentDescription = "Asteroid $position: ${asteroid.codename} " +
+                "${asteroid.closeApproachDate} potentially hazardous: " +
+                "${asteroid.isPotentiallyHazardous}"
+        holder.itemView.contentDescription = contentDescription
         holder.bind(asteroid)
     }
 
@@ -52,7 +55,7 @@ class AsteroidsAdapter(val callback: AsteroidClick) :
         }
     }
 
-    inner class AsteroidClick(val block: (Asteroid) -> Unit) {
+    class AsteroidClick(val block: (Asteroid) -> Unit) {
         fun onClick(asteroid: Asteroid) = block(asteroid)
     }
 }
