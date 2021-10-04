@@ -43,11 +43,10 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
 
         withContext(Dispatchers.IO) {
             try {
-                val asteroidResponseBody = NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate).await()
+                val asteroidResponseBody =
+                    NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate).await()
 
                 asteroidsList = parseAsteroidsJsonResult(JSONObject(asteroidResponseBody.string()))
-
-                Timber.i("Asteroids List => $asteroidsList")
 
                 database.asteroidDao.insertAll(*asteroidsList.toDatabaseModel())
             } catch (e: Exception) {
