@@ -13,13 +13,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_background">
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/activity_main_image_of_the_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:contentDescription="@{asteroid.potentiallyHazardous ? @string/potentially_hazardous_asteroid_image : @string/not_hazardous_asteroid_image}"
+            android:focusable="false"
             app:asteroidStatusImage="@{asteroid.potentiallyHazardous}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +31,8 @@
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

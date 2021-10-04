@@ -67,7 +67,7 @@ fun getTodaysDateFormatted(): String {
     return dateFormat.format(currentDate)
 }
 
-fun getOneFromNowWithDateFormatted(): String {
+fun getOneWeekFromNowWithDateFormatted(): String {
     val calendar =  Calendar.getInstance()
     calendar.add(Calendar.DAY_OF_YEAR, 7)
     val currentTime = calendar.time

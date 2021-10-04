@@ -12,17 +12,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AsteroidDao {
 
-    @Query("select * from asteroids order by date(closeApproachDate) asc")
-    fun getSavedAsteroidData(): LiveData<List<AsteroidEntity>>
-
-    @Query("select * from asteroids where closeApproachDate = :date")
-    fun getTodaysAsteroids(date: String): LiveData<List<AsteroidEntity>>
-
-    @Query("SELECT * FROM asteroids ORDER BY closeApproachDate ASC")
-    fun getAllAsteroids(): LiveData<List<Asteroid>>
-
     @Query("select * from asteroids where closeApproachDate between :startDate and :endDate order by date(closeApproachDate) asc")
     fun getAsteroidsByCloseApproachDate(startDate: String, endDate: String): LiveData<List<AsteroidEntity>>
+
+    @Query("select * from asteroids order by date(closeApproachDate) asc")
+    fun getAllAsteroids(): LiveData<List<AsteroidEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg asteroids: AsteroidEntity)

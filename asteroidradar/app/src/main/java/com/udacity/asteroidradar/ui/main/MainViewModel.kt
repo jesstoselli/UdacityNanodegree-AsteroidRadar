@@ -7,14 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.data.repository.AsteroidRepository
 import com.udacity.asteroidradar.data.repository.PictureRepository
-import com.udacity.asteroidradar.data.sources.local.getDatabase
+import com.udacity.asteroidradar.data.sources.local.AsteroidDatabase
 import com.udacity.asteroidradar.domain.Asteroid
 import com.udacity.asteroidradar.utils.Event
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database = getDatabase(application)
+    private val database = AsteroidDatabase.getDatabase(application)
     private val asteroidsRepository = AsteroidRepository(database)
     private val pictureOfTheDayRepository = PictureRepository(database)
 

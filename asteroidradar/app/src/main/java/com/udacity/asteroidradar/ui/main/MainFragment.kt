@@ -1,12 +1,7 @@
 package com.udacity.asteroidradar.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,8 +21,6 @@ class MainFragment : Fragment() {
         ).get(MainViewModel::class.java)
     }
 
-//    private var viewModelAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,11 +33,11 @@ class MainFragment : Fragment() {
             viewModel.asteroidClicked(it)
         })
 
-//        viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
-//            it.getContentIfNotHandled()?.let {
-//                findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-//            }
-//        })
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let { asteroidItem ->
+                findNavController().navigate(MainFragmentDirections.actionShowDetail(asteroidItem))
+            }
+        })
 
         setHasOptionsMenu(true)
         return binding.root
