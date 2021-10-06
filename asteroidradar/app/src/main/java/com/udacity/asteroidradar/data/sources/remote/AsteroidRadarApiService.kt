@@ -27,8 +27,17 @@ interface AsteroidRadarApiService {
         @Query("start_date") start: String,
         @Query("end_date") end: String,
         @Query("api_key") apiKey: String = Constants.API_KEY
-    ): Deferred<ResponseBody>
+    )
 }
+
+//interface AsteroidRadarApiService {
+//    @GET("neo/rest/v1/feed")
+//    fun getAsteroidsAsync(
+//        @Query("start_date") start: String,
+//        @Query("end_date") end: String,
+//        @Query("api_key") apiKey: String = Constants.API_KEY
+//    ): Deferred<ResponseBody>
+//}
 
 interface PictureOfTheDayService {
     @GET("planetary/apod")

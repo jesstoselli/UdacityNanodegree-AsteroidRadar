@@ -53,4 +53,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun asteroidClicked(asteroid: Asteroid) {
         _navigateToDetails.value = Event(asteroid)
     }
+
+    fun onFilter(filter: AsteroidRepository.FilterType) {
+        asteroidsRepository.filtering(filter)
+    }
 }
