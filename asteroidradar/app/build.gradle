@@ -6,13 +6,6 @@ plugins {
     id 'kotlin-android-extensions'
 }
 
-//apply plugin: 'com.android.application'
-
-//apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-kapt'
-//apply plugin: 'androidx.navigation.safeargs'
-//apply plugin: 'kotlin-android-extensions'
-
 android {
     compileSdkVersion 31
     buildToolsVersion "29.0.3"

@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.udacity.asteroidradar.data.sources.local.AsteroidDatabase
-import com.udacity.asteroidradar.data.sources.local.entities.AsteroidEntity
 import com.udacity.asteroidradar.data.sources.local.toDatabaseModel
 import com.udacity.asteroidradar.data.sources.local.toDomainModel
 import com.udacity.asteroidradar.data.sources.remote.NetworkApi
@@ -70,36 +69,21 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         _filterType.value = filterType
     }
 
-//    val asteroids: LiveData<List<Asteroid>> =
-//        Transformations.map(database.asteroidDao.getAllAsteroids()) {
-//            it.toDomainModel()
-//        }
-
-//    fun getAllAsteroids(): LiveData<List<AsteroidEntity>> {
-//        return database.asteroidDao.getAsteroidsFromDatabase()
-//    }
-//
-//    fun getAsteroidsByCloseApproachDate(
-//        startDate: String,
-//        endDate: String
-//    ): LiveData<List<AsteroidEntity>> {
-//        return database.asteroidDao.getAsteroidsByCloseApproachDate(startDate, endDate)
-//    }
-
     // Refresh the picture stored in offline cache
-    suspend fun refreshAsteroidsList() {
-//        var asteroidsList: ArrayList<Asteroid>
+    suspend fun refreshAsteroidsList(
+        startDate: String = getTodaysDateFormatted(),
+        endDate: String = getOneWeekFromNowWithDateFormatted()
+    ) {
+        var asteroidsList: ArrayList<Asteroid>
 
         withContext(Dispatchers.IO) {
             try {
-                val startDate: String = getTodaysDateFormatted()
-                val endDate: String = getOneWeekFromNowWithDateFormatted()
+                val asteroidResponseBody =
+                    NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate).await()
 
-                val asteroidsResponse = NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate)
+                asteroidsList = parseAsteroidsJsonResult(JSONObject(asteroidResponseBody.string()))
 
-                val parseAsteroids = parseAsteroidsJsonResult(JSONObject(asteroidsResponse.toString()))
-
-                database.asteroidDao.insertAll(*parseAsteroids.toDatabaseModel())
+                database.asteroidDao.insertAll(*asteroidsList.toDatabaseModel())
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Timber.d("Refresh failed ${e.message}")
@@ -109,20 +93,20 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         }
     }
 
-//    suspend fun refreshAsteroidsList(
-//        startDate: String = getTodaysDateFormatted(),
-//        endDate: String = getOneWeekFromNowWithDateFormatted()
-//    ) {
-//        var asteroidsList: ArrayList<Asteroid>
-//
+
+//    suspend fun refreshAsteroidsList() {
 //        withContext(Dispatchers.IO) {
 //            try {
-//                val asteroidResponseBody =
-//                    NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate).await()
+//                val startDate: String = getTodaysDateFormatted()
+//                val endDate: String = getOneWeekFromNowWithDateFormatted()
 //
-//                asteroidsList = parseAsteroidsJsonResult(JSONObject(asteroidResponseBody.string()))
+//                val asteroidsResponse =
+//                    NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate)
 //
-//                database.asteroidDao.insertAll(*asteroidsList.toDatabaseModel())
+//                val parseAsteroids =
+//                    parseAsteroidsJsonResult(JSONObject(asteroidsResponse.toString()))
+//
+//                database.asteroidDao.insertAll(*parseAsteroids.toDatabaseModel())
 //            } catch (e: Exception) {
 //                withContext(Dispatchers.Main) {
 //                    Timber.d("Refresh failed ${e.message}")
