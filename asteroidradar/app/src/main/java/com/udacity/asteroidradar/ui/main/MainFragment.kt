@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.show_week_menu -> viewModel.onFilter(AsteroidRepository.FilterType.WEEK)
             R.id.show_today_menu -> viewModel.onFilter(AsteroidRepository.FilterType.TODAY)
             R.id.show_saved_menu -> viewModel.onFilter(AsteroidRepository.FilterType.FROM_DATABASE)

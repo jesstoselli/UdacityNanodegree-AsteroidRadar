@@ -2,14 +2,13 @@ package com.udacity.asteroidradar.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.databinding.AsteroidItemBinding
 import com.udacity.asteroidradar.domain.Asteroid
 
-class AsteroidsAdapter internal constructor (private val callback: AsteroidClick) :
+class AsteroidsAdapter internal constructor(private val callback: AsteroidClick) :
     ListAdapter<Asteroid, AsteroidsAdapter.AsteroidViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AsteroidViewHolder {
@@ -18,9 +17,9 @@ class AsteroidsAdapter internal constructor (private val callback: AsteroidClick
 
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) {
         val asteroid = getItem(position)
-         holder.itemView.setOnClickListener {
-              callback.onClick(asteroid)
-         }
+        holder.itemView.setOnClickListener {
+            callback.onClick(asteroid)
+        }
 
         // For accessibility purposes
         val contentDescription = "Asteroid $position: ${asteroid.codename} " +

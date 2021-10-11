@@ -1,9 +1,9 @@
 package com.udacity.asteroidradar.data.sources.remote
 
-import com.udacity.asteroidradar.domain.Asteroid
-import com.udacity.asteroidradar.domain.PictureOfDay
 import com.udacity.asteroidradar.data.sources.remote.networkmodels.NetworkAsteroid
 import com.udacity.asteroidradar.data.sources.remote.networkmodels.NetworkPictureOfTheDay
+import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.domain.PictureOfDay
 
 fun List<Asteroid>.toNetworkModel(): List<NetworkAsteroid> {
     return map {

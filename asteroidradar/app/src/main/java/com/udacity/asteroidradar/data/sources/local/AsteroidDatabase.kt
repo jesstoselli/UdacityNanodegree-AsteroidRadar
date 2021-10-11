@@ -9,7 +9,11 @@ import com.udacity.asteroidradar.data.sources.local.dao.PictureDao
 import com.udacity.asteroidradar.data.sources.local.entities.AsteroidEntity
 import com.udacity.asteroidradar.data.sources.local.entities.PictureEntity
 
-@Database(entities = [AsteroidEntity::class, PictureEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [AsteroidEntity::class, PictureEntity::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
     abstract val pictureDao: PictureDao

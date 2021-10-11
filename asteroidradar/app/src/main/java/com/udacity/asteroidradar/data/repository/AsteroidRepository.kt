@@ -93,29 +93,6 @@ class AsteroidRepository(private val database: AsteroidDatabase) {
         }
     }
 
-
-//    suspend fun refreshAsteroidsList() {
-//        withContext(Dispatchers.IO) {
-//            try {
-//                val startDate: String = getTodaysDateFormatted()
-//                val endDate: String = getOneWeekFromNowWithDateFormatted()
-//
-//                val asteroidsResponse =
-//                    NetworkApi.asteroidService.getAsteroidsAsync(startDate, endDate)
-//
-//                val parseAsteroids =
-//                    parseAsteroidsJsonResult(JSONObject(asteroidsResponse.toString()))
-//
-//                database.asteroidDao.insertAll(*parseAsteroids.toDatabaseModel())
-//            } catch (e: Exception) {
-//                withContext(Dispatchers.Main) {
-//                    Timber.d("Refresh failed ${e.message}")
-//                }
-//                e.printStackTrace()
-//            }
-//        }
-//    }
-
     suspend fun removeOldAsteroids() {
         withContext(Dispatchers.IO) {
             database.asteroidDao.removeOldAsteroidsData(getTodaysDateFormatted())
